@@ -4,6 +4,7 @@ package com.kakaopay.searchbook.di
 import android.content.Context
 import androidx.room.Room
 import com.kakaopay.searchbook.BuildConfig
+import com.kakaopay.searchbook.app.App
 import com.kakaopay.searchbook.app.DB_NAME
 import com.kakaopay.searchbook.data.network.ApiServices
 import com.kakaopay.searchbook.data.db.AppDatabase
@@ -20,6 +21,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Singleton
+    @Provides
+    fun provideApplication(@ApplicationContext app: Context): App {
+        return app as App
+    }
 
     @Singleton
     @Provides

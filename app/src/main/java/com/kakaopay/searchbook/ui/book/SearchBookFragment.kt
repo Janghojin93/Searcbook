@@ -5,38 +5,50 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kakaopay.searchbook.R
 import com.kakaopay.searchbook.app.App
-import com.kakaopay.searchbook.data.model.book.Book
+import com.kakaopay.searchbook.app.PAGE_SIZE
+import com.kakaopay.searchbook.app.SEARCH_BOOK_TAG
+import com.kakaopay.searchbook.app.SEARCH_BOOK_TIME_DELAY
 import com.kakaopay.searchbook.data.network.Resource
 import com.kakaopay.searchbook.databinding.FragmentSearchBookBinding
 import com.kakaopay.searchbook.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class SearchBookFragment : BaseFragment() {
 
+    @Inject
+    lateinit var application: App
     private lateinit var binding: FragmentSearchBookBinding
+    private lateinit var mRootView: View
+    private val bookViewModel: BookViewModel by activityViewModels()
 
     override val layoutId = R.layout.fragment_search_book
 
-    private lateinit var mRootView: View
 
-    private val bookViewModel: BookViewModel by activityViewModels()
+    var isLoading = false
+    var isLastPage = false
+    var isScrolling = false
 
-    private var listOfBook = ArrayList<Book>()
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        getSearchBook("친구")
-
+    private val searchbookAdapter: SearchBookAdapter by lazy {
+        SearchBookAdapter()
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,17 +57,30 @@ class SearchBookFragment : BaseFragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         mRootView = binding.root
+        setupRecyclerView()
 
-       /* binding.fasdasd.onThrottleClick {
-            Log.d("asdafasdasdasdasd1asd23", "버튼 2 클릭");
-            (activity as BookActivity).openBookDetailFragment()
-        }*/
 
         return mRootView
 
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        binding.edittextSearchbookSearchbar.apply {
+            afterTextChangedCustom(SEARCH_BOOK_TIME_DELAY) {
+                if (getNetworkConnected(application)) {
+                    bookViewModel.newSearchBook(it)
+                } else {
+                    Log.d(SEARCH_BOOK_TAG, "error: 인터넷연결안됨");
+                }
+            }
+        }
+
+        initObsever()
+    }
 
     companion object {
         @JvmStatic
@@ -68,31 +93,91 @@ class SearchBookFragment : BaseFragment() {
     }
 
 
-    private fun getSearchBook(query: String) {
-        bookViewModel.searchBook(query)
-        if (getNetworkConnected(App.getMyApplicationContext())) {
-            bookViewModel.searchBookList.observe(this, Observer { response ->
-                when (response) {
-                    is Resource.Success -> {
-                        response.data?.let { bookResponse ->
-                            Log.d("httptetest", "성공::" + bookResponse.documents[0].isbn);
-                        }
-                    }
-
-                    is Resource.Error -> {
-                        response.message?.let { message ->
-                            Log.d("httptetest", "에러::" + message);
-                        }
-                    }
-
-                    is Resource.Loading -> {
-                        Log.d("httptetest", "로딩");
+    private fun initObsever() {
+        bookViewModel.searchBook.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
+                    hideProgressBar()
+                    response.data?.let { bookResponse ->
+                        Log.d("fasdasdqweq", "searchBookPage::" + bookViewModel.searchBookPage)
+                        Log.d(SEARCH_BOOK_TAG, "성공:: ${bookResponse.meta.is_end}");
+                        Log.d("fasdasdqweq", "상태::${bookResponse.meta.is_end}\"")
+                        Log.d("fasddasdasdqweq", "밖에서 값::${bookResponse.meta.is_end}\"")
+                        searchbookAdapter.submitList(bookResponse.documents.toList())
+                        isLastPage = bookResponse.meta.is_end
                     }
                 }
-            })
 
-        } else {
-            Log.d("httptetest", "인터넷연결을 확인하세요");
+                is Resource.Error -> {
+                    hideProgressBar()
+                    response.message?.let { message ->
+                        Log.d(SEARCH_BOOK_TAG, "에러:: ${message}");
+                    }
+                }
+
+                is Resource.Loading -> {
+                    showProgressBar()
+                    Log.d(SEARCH_BOOK_TAG, "로딩중");
+                }
+            }
+        })
+
+
+    }
+
+
+    private fun setupRecyclerView() {
+        binding.recyclerviewSearchbookBooklist.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            adapter = searchbookAdapter
+            addOnScrollListener(this@SearchBookFragment.scrollListener)
         }
     }
+
+
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            val visibleItemCount = layoutManager.childCount
+            val totalItemCount = layoutManager.itemCount
+
+            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
+            val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
+            val isNotAtBeginning = firstVisibleItemPosition >= 0
+            val isTotalMoreThanVisible = totalItemCount >= 50
+            val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
+                    isTotalMoreThanVisible && isScrolling
+            if (shouldPaginate) {
+                bookViewModel.pagingSearchBook(binding.edittextSearchbookSearchbar.text.toString())
+                isScrolling = false
+                Log.d(SEARCH_BOOK_TAG, "scrollListener::");
+
+            } else {
+                binding.recyclerviewSearchbookBooklist.setPadding(0, 0, 0, 0)
+            }
+
+        }
+
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                isScrolling = true
+            }
+        }
+    }
+
+    private fun hideProgressBar() {
+        binding.ProgressBarSearchbookLoadingbar.visibility = View.INVISIBLE
+        isLoading = false
+    }
+
+    private fun showProgressBar() {
+        binding.ProgressBarSearchbookLoadingbar.visibility = View.VISIBLE
+        isLoading = true
+    }
+
 }

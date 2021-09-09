@@ -6,8 +6,8 @@ import com.kakaopay.searchbook.data.model.book.Book
 data class SearchBookResponce(
 
     @SerializedName("documents")
-    val documents: List<Book>,
+    var documents: MutableList<Book>,
 
     @SerializedName("meta")
-    val meta: SearchBookMeta
+    var meta: SearchBookMeta
 )

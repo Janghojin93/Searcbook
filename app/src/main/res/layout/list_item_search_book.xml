@@ -1,99 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/imageview_book_thumbnail"
-        android:layout_width="60dp"
-        android:layout_height="87dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/poster" />
+    <data>
 
-    <ImageButton
-        android:id="@+id/imagebutton_book_likebutton"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@null"
-        android:src="@drawable/ic_baseline_favorite_24_false"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <import type="android.view.View" />
 
-    <TextView
-        android:id="@+id/textview_book_title"
-        style="@style/search_book_list_text_style"
-        android:layout_width="0dp"
+        <variable
+            name="book_model"
+            type="com.kakaopay.searchbook.data.model.book.Book" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintLeft_toRightOf="@+id/imageview_book_thumbnail"
-        app:layout_constraintRight_toLeftOf="@+id/imagebutton_book_likebutton"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/full_names" />
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageview_book_thumbnail"
+            bookthumbnail="@{book_model.thumbnail}"
+            android:layout_width="60dp"
+            android:layout_height="87dp"
+            android:layout_marginLeft="16dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/imagebutton_book_likebutton"
+            islikebook="@{book_model.islike}"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@null"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textview_book_title"
+            style="@style/search_book_list_text_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="10dp"
+            android:lines="1"
+            android:text="@{book_model.title}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintLeft_toRightOf="@+id/imageview_book_thumbnail"
+            app:layout_constraintRight_toLeftOf="@+id/imagebutton_book_likebutton"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/textview_book_subject"
-        style="@style/search_book_list_text_style"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:ellipsize="end"
-        android:lines="1"
-        app:layout_constraintLeft_toRightOf="@+id/imageview_book_thumbnail"
-        app:layout_constraintRight_toLeftOf="@+id/imagebutton_book_likebutton"
-        app:layout_constraintTop_toBottomOf="@+id/textview_book_title"
-        tools:text="@tools:sample/lorem/random"
-
-        />
-
-
-    <TextView
-        android:id="@+id/textview_book_price"
-        style="@style/search_book_list_text_style"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textStyle="italic"
-        app:layout_constraintLeft_toRightOf="@+id/imageview_book_thumbnail"
-        app:layout_constraintRight_toLeftOf="@+id/imagebutton_book_likebutton"
-        app:layout_constraintTop_toBottomOf="@+id/textview_book_subject"
-        tools:text="@tools:sample/first_names" />
+        <TextView
+            android:id="@+id/textview_book_subject"
+            style="@style/search_book_list_text_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:lines="1"
+            app:layout_constraintLeft_toRightOf="@+id/imageview_book_thumbnail"
+            app:layout_constraintRight_toLeftOf="@+id/imagebutton_book_likebutton"
+            app:layout_constraintTop_toBottomOf="@+id/textview_book_title"
+            bookcontents="@{book_model.contents}"
+            />
 
 
-    <TextView
-        android:id="@+id/textview_book_release_date"
-        style="@style/search_book_list_text_style"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/imageview_book_thumbnail"
-        app:layout_constraintRight_toLeftOf="@+id/imagebutton_book_likebutton"
-        app:layout_constraintTop_toBottomOf="@+id/textview_book_price"
-        tools:text="@tools:sample/cities" />
+        <TextView
+            android:id="@+id/textview_book_price"
+            style="@style/search_book_list_text_style"
+            bookprice="@{book_model.price}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textStyle="italic"
+            app:layout_constraintLeft_toRightOf="@+id/imageview_book_thumbnail"
+            app:layout_constraintRight_toLeftOf="@+id/imagebutton_book_likebutton"
+            app:layout_constraintTop_toBottomOf="@+id/textview_book_subject" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textview_book_release_date"
+            style="@style/search_book_list_text_style"
+            bookreleasedate="@{book_model.datetime}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="13dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/imageview_book_thumbnail"
+            app:layout_constraintRight_toLeftOf="@+id/imagebutton_book_likebutton"
+            app:layout_constraintTop_toBottomOf="@+id/textview_book_price" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
