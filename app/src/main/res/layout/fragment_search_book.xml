@@ -45,16 +45,75 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_searchbook_empty_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputlayout_searchbook_searchbar_background"
+
+            >
+
+            <ImageView
+                android:id="@+id/imageview_emptyview_empty_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/img_empty"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/imageview_emptyview_empty_text_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/searchbook_empty_text_top"
+                android:textColor="#707070"
+                android:textSize="14dp"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageview_emptyview_empty_image" />
+
+
+            <TextView
+                android:id="@+id/imageview_emptyview_empty_text_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="@string/searchbook_empty_text_bottom"
+                android:textColor="#b8b8b8"
+                android:textSize="11dp"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageview_emptyview_empty_text_top"
+
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_searchbook_booklist"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@android:color/transparent"
             android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputlayout_searchbook_searchbar_background"
-            tools:listitem="@layout/list_item_search_book">
+            tools:listitem="@layout/list_item_search_book"
+
+            >
 
         </androidx.recyclerview.widget.RecyclerView>
 

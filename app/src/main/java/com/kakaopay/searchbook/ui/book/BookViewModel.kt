@@ -6,16 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kakaopay.searchbook.app.PAGE_SIZE
 import com.kakaopay.searchbook.app.SEARCH_BOOK_TAG
-import com.kakaopay.searchbook.data.model.book.Book
 import com.kakaopay.searchbook.data.model.responce.SearchBookResponce
 import com.kakaopay.searchbook.data.network.Resource
 import com.kakaopay.searchbook.data.repository.book.BookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import retrofit2.Response
-import java.io.IOException
 import javax.inject.Inject
-import com.kakaopay.searchbook.ui.book.SearchBookEvent.*
 
 
 @HiltViewModel
@@ -28,11 +25,9 @@ class BookViewModel @Inject constructor(private val bookRepository: BookReposito
     private var oldSearchQuery = ""
     private var oldsearchBookPage = 1
 
-    init {
-        newSearchBook("카카오")
-    }
 
 
+    //사용자가 새로운 쿼리로 검색을 했을때 사용하는 함수
     fun newSearchBook(searchQuery: String) {
         searchBookPage = 1
         searchBookResponse = null
@@ -45,6 +40,7 @@ class BookViewModel @Inject constructor(private val bookRepository: BookReposito
         }
     }
 
+    //사용자가 스크롤을 최하단으로 내렸을때 추가로 데이터를 요청하기위한 함수(다음 페이지가 없다면 실행되지않는다.)
     fun pagingSearchBook(searchQuery: String) {
         searchBook(searchQuery)
     }
@@ -53,8 +49,12 @@ class BookViewModel @Inject constructor(private val bookRepository: BookReposito
     private fun searchBook(searchQuery: String) =
         viewModelScope.launch {
             searchBook.postValue(Resource.Loading())
-            Log.d(SEARCH_BOOK_TAG, "searchQuery::${searchQuery}    searchBookPage::${searchBookPage}")
+            Log.d(
+                SEARCH_BOOK_TAG,
+                "[searchQuery::${searchQuery}]  [searchBookPage::${searchBookPage}]"
+            )
             val response = bookRepository.getSearchBook(searchQuery, searchBookPage, PAGE_SIZE)
+            Log.d(SEARCH_BOOK_TAG, "[반응완료]")
             searchBook.postValue(handleBookResponse(response))
         }
 

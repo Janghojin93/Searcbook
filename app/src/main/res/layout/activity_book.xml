@@ -11,7 +11,7 @@
     </data>
 
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.book.BookActivity">
@@ -23,24 +23,16 @@
 
 
         <TextView
-            android:id="@+id/btn1"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentBottom="true"
-            android:background="#FFC107"
-            android:text="버튼" />
-
-        <TextView
             android:id="@+id/btn2"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
             android:background="#8BC34A"
-            android:text="버튼" />
+            android:text="버튼"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </layout>

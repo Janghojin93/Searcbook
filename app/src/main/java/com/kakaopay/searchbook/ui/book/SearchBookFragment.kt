@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -22,10 +24,8 @@ import com.kakaopay.searchbook.data.network.Resource
 import com.kakaopay.searchbook.databinding.FragmentSearchBookBinding
 import com.kakaopay.searchbook.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 import javax.inject.Inject
 
 
@@ -72,9 +72,10 @@ class SearchBookFragment : BaseFragment() {
         binding.edittextSearchbookSearchbar.apply {
             afterTextChangedCustom(SEARCH_BOOK_TIME_DELAY) {
                 if (getNetworkConnected(application)) {
+                    Log.d(SEARCH_BOOK_TAG, "검색::" + it);
                     bookViewModel.newSearchBook(it)
                 } else {
-                    Log.d(SEARCH_BOOK_TAG, "error: 인터넷연결안됨");
+                    Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -97,15 +98,22 @@ class SearchBookFragment : BaseFragment() {
         bookViewModel.searchBook.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
+                    var isList = true
                     hideProgressBar()
                     response.data?.let { bookResponse ->
-                        Log.d("fasdasdqweq", "searchBookPage::" + bookViewModel.searchBookPage)
                         Log.d(SEARCH_BOOK_TAG, "성공:: ${bookResponse.meta.is_end}");
-                        Log.d("fasdasdqweq", "상태::${bookResponse.meta.is_end}\"")
-                        Log.d("fasddasdasdqweq", "밖에서 값::${bookResponse.meta.is_end}\"")
                         searchbookAdapter.submitList(bookResponse.documents.toList())
                         isLastPage = bookResponse.meta.is_end
+                        isList = bookResponse.documents.toList().size != 0
                     }
+
+                    if (!isList) {
+                        showEmptyView()
+
+                    } else {
+                        hideEmptyView()
+                    }
+
                 }
 
                 is Resource.Error -> {
@@ -121,8 +129,6 @@ class SearchBookFragment : BaseFragment() {
                 }
             }
         })
-
-
     }
 
 
@@ -151,11 +157,16 @@ class SearchBookFragment : BaseFragment() {
             val isTotalMoreThanVisible = totalItemCount >= 50
             val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
                     isTotalMoreThanVisible && isScrolling
-            if (shouldPaginate) {
-                bookViewModel.pagingSearchBook(binding.edittextSearchbookSearchbar.text.toString())
-                isScrolling = false
-                Log.d(SEARCH_BOOK_TAG, "scrollListener::");
 
+            if (shouldPaginate) {
+                if (getNetworkConnected(application)) {
+                    bookViewModel.pagingSearchBook(binding.edittextSearchbookSearchbar.text.toString())
+                    isScrolling = false
+                    Log.d(SEARCH_BOOK_TAG, "scrollListener::");
+                } else {
+                    Toast.makeText(getActivity(), R.string.network_error, Toast.LENGTH_SHORT)
+                        .show();
+                }
             } else {
                 binding.recyclerviewSearchbookBooklist.setPadding(0, 0, 0, 0)
             }
@@ -179,5 +190,22 @@ class SearchBookFragment : BaseFragment() {
         binding.ProgressBarSearchbookLoadingbar.visibility = View.VISIBLE
         isLoading = true
     }
+
+
+    private fun hideEmptyView() {
+        binding.recyclerviewSearchbookBooklist.visibility = View.VISIBLE
+        binding.imageviewEmptyviewEmptyImage.visibility = View.GONE
+        binding.imageviewEmptyviewEmptyTextTop.visibility = View.GONE
+        binding.imageviewEmptyviewEmptyTextBottom.visibility = View.GONE
+
+    }
+
+    private fun showEmptyView() {
+        binding.recyclerviewSearchbookBooklist.visibility = View.GONE
+        binding.imageviewEmptyviewEmptyImage.visibility = View.VISIBLE
+        binding.imageviewEmptyviewEmptyTextTop.visibility = View.VISIBLE
+        binding.imageviewEmptyviewEmptyTextBottom.visibility = View.VISIBLE
+    }
+
 
 }
