@@ -6,8 +6,9 @@
     <data>
 
         <variable
-            name="viewModel"
-            type="com.kakaopay.searchbook.ui.book.BookViewModel" />
+            name="book_detail_model"
+            type="com.kakaopay.searchbook.data.model.book.Book" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,10 +41,11 @@
                 android:layout_width="60dp"
                 android:layout_height="0dp"
                 android:background="@null"
-                android:src="@drawable/ic_baseline_favorite_24_false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                islikebook="@{book_detail_model.islike}"
+                />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -53,7 +55,6 @@
             android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:text="@string/hello_blank_fragment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -71,6 +72,7 @@
 
                     <ImageView
                         android:id="@+id/imageview_bookdetail_book_image"
+                        bookthumbnail="@{book_detail_model.thumbnail}"
                         android:layout_width="150dp"
                         android:layout_height="0dp"
                         android:layout_marginLeft="8dp"
@@ -80,8 +82,7 @@
                         app:layout_constraintDimensionRatio="120:174"
                         app:layout_constraintLeft_toRightOf="@+id/guideline_bookdetail_left"
                         app:layout_constraintRight_toLeftOf="@+id/guideline_bookdetail_right"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/poster" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/textview_bookdetail_book_name"
@@ -92,7 +93,7 @@
                         android:ellipsize="end"
                         android:gravity="center"
                         android:maxLines="3"
-                        android:text="PinkCupcakesPinkCupcakes"
+                        android:text="@{book_detail_model.title}"
                         android:textSize="26dp"
                         app:layout_constraintLeft_toRightOf="@+id/guideline_bookdetail_left"
                         app:layout_constraintRight_toLeftOf="@+id/guideline_bookdetail_right"
@@ -101,12 +102,12 @@
                     <TextView
                         android:id="@+id/textview_bookdetail_price"
                         style="@style/detail_book_information_text_text_style"
+                        bookprice="@{book_detail_model.price}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="가격: 1800원"
                         app:layout_constraintLeft_toRightOf="@+id/guideline_bookdetail_left"
                         app:layout_constraintRight_toLeftOf="@+id/guideline_bookdetail_right"
                         app:layout_constraintTop_toBottomOf="@+id/textview_bookdetail_book_name" />
@@ -120,7 +121,7 @@
                         android:layout_marginTop="10dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="출판사: 한컴닷코"
+                        android:text="@{book_detail_model.publisher}"
                         app:layout_constraintLeft_toRightOf="@+id/guideline_bookdetail_left"
                         app:layout_constraintRight_toLeftOf="@+id/guideline_bookdetail_right"
                         app:layout_constraintTop_toBottomOf="@+id/textview_bookdetail_price" />
@@ -129,12 +130,12 @@
                     <TextView
                         android:id="@+id/textview_bookdetail_release_date"
                         style="@style/detail_book_information_text_text_style"
+                        bookreleasedate="@{book_detail_model.datetime}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="출시일: 2021년 12월 20일"
                         app:layout_constraintLeft_toRightOf="@+id/guideline_bookdetail_left"
                         app:layout_constraintRight_toLeftOf="@+id/guideline_bookdetail_right"
                         app:layout_constraintTop_toBottomOf="@+id/textview_bookdetail_publisher" />
@@ -143,14 +144,15 @@
                     <TextView
                         android:id="@+id/textview_bookdetail_contents"
                         style="@style/detail_book_contents_text_text_style"
+                        bookcontents="@{book_detail_model.contents}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
-                        android:text="지오메카는 또봇과 바이클론즈의 뒤를 잇는 영실업의 신작 로봇 애니메이션입니다. 아이들이 좋아하는 사자, 악어, 코뿔소 등의 동물을 모티브로 디자인된 로봇과 각 동물의 특징을 살린 파일럿들의 슈트로 주목을 받으며 아이들에게 사랑받으며 인기 캐릭터로 거듭나고 있습니다. 솔리드 모드, 비스트 모드, 워리어 모드, 세 가지 형태로 변신하는 새로운 영웅 지오메카의 이야기가 지금 시작됩니다."
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@+id/guideline_bookdetail_left"
                         app:layout_constraintRight_toLeftOf="@+id/guideline_bookdetail_right"
-                        app:layout_constraintTop_toBottomOf="@+id/textview_bookdetail_release_date" />
+                        app:layout_constraintTop_toBottomOf="@+id/textview_bookdetail_release_date"
+                        />
 
 
                     <androidx.constraintlayout.widget.Guideline

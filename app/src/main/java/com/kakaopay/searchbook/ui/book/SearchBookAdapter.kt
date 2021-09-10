@@ -1,5 +1,6 @@
 package com.kakaopay.searchbook.ui.book
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -7,9 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kakaopay.searchbook.data.model.book.Book
 import com.kakaopay.searchbook.databinding.ListItemSearchBookBinding
 import com.kakaopay.searchbook.utils.DiffCallback
-import java.util.*
 
 class SearchBookAdapter : ListAdapter<Book, RecyclerView.ViewHolder>(DiffCallback()) {
+
+
+    var onBookClicked: ((Int) -> Unit)? = null
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val viewholder =
             SearchBookViewHolder(
@@ -35,11 +40,13 @@ class SearchBookAdapter : ListAdapter<Book, RecyclerView.ViewHolder>(DiffCallbac
     inner class SearchBookViewHolder(val binding: ListItemSearchBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+
         init {
-            binding.imagebuttonBookLikebutton.setOnClickListener {
+            binding.constraintlayoutBookParentView.setOnClickListener {
+                Log.d("dasfasdasd", "클릭됨");
+                onBookClicked!!.invoke(adapterPosition)
             }
         }
-
 
         fun bind(data: Book) {
             with(binding) {

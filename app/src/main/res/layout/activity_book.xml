@@ -17,19 +17,9 @@
         tools:context=".ui.book.BookActivity">
 
         <FrameLayout
-            android:id="@+id/view_book_fragment_container"
+            android:id="@+id/view_bookactivity_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-
-        <TextView
-            android:id="@+id/btn2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="#8BC34A"
-            android:text="버튼"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

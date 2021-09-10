@@ -26,20 +26,13 @@ class BookActivity : BaseActivity(), BookNavigator {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.view_book_fragment_container, SearchBookFragment.newInstance()).commit()
-        }
-
-
-        binding.btn2.onThrottleClick {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.view_book_fragment_container, BookDetailFragment.newInstance())
-                .addToBackStack(null).commit()
+                .add(R.id.view_bookactivity_fragment_container, SearchBookFragment.newInstance()).commit()
         }
 
     }
     override fun openBookDetailFragment() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.view_book_fragment_container, BookDetailFragment.newInstance())
+            .replace(R.id.view_bookactivity_fragment_container, BookDetailFragment.newInstance())
             .addToBackStack(null).commit()
     }
 }

@@ -11,7 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.kakaopay.searchbook.R
 import java.text.SimpleDateFormat
 
-object RecyclerViewBinding {
+object ViewBinding {
 
     @JvmStatic
     @BindingAdapter("bookthumbnail")
