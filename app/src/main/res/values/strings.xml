@@ -1,12 +1,9 @@
 <resources>
     <string name="app_name">SearchBook</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="search_book_hint">책 검색</string>
-    <string name="no_internet_connection">인터넷 연결상태를 확인해주세요.</string>
+    <string name="no_internet_connection">인터넷 연결상태를 확인해주세요</string>
     <string name="searchbook_empty_text_top">아쉽게도 검색하신 책이 없네요</string>
-    <string name="searchbook_empty_text_bottom">원하시는 책을 검색해보세요</string>
+    <string name="searchbook_empty_text_bottom">새로운 책을 검색해보세요</string>
     <string name="detailbook_like_true">좋아요</string>
     <string name="detailbook_like_false">좋아요 취소</string>
-
-
 </resources>

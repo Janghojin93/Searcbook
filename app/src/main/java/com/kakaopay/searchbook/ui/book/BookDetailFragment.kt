@@ -35,6 +35,7 @@ class BookDetailFragment : BaseFragment() {
         mRootView = binding.root
 
         Log.d(TAG, "item::${bookViewModel.detailBook?.title}")
+
         initUi()
 
         return mRootView

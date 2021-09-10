@@ -30,7 +30,7 @@ class BookViewModel @Inject constructor(private val bookRepository: BookReposito
     private var selectDetailBookPosition = 0
 
 
-    //사용자가 새로운 쿼리로 검색을 했을때 사용하는 함수
+    //사용자가 새로운 쿼리로 검색을 했을 때 사용하는 함수
     fun newSearchBook(searchQuery: String) {
         Log.d(TAG, "[searchQuery::${searchQuery}]  [searchBookPage::${searchBookPage}]")
         Log.d(TAG, "[oldSearchQuery::${oldSearchQuery}]  [oldsearchBookPage::${oldsearchBookPage}]")
@@ -46,7 +46,7 @@ class BookViewModel @Inject constructor(private val bookRepository: BookReposito
         }
     }
 
-    //사용자가 스크롤을 최하단으로 내렸을때 추가로 데이터를 요청하기위한 함수(다음 페이지가 없다면 실행되지않는다.)
+    //사용자가 스크롤을 최하단으로 내렸을 때 추가로 데이터를 요청하기 위한 함수(다음 페이지가 없다면 실행되지 않는다.)
     fun pagingSearchBook(searchQuery: String) {
 
         oldSearchQuery = searchQuery
@@ -55,9 +55,9 @@ class BookViewModel @Inject constructor(private val bookRepository: BookReposito
         searchBook(searchQuery)
     }
 
-    //사용자가 책 검색 리스트에서 아이템을 클릭을하면 BookDetailFragment로 이동을 한다.
-    //이때 BookDetailFragment는 detailBook이라는 값을 참조하여 책의 제목이나 콘텐츠 등등을 사용자에게 보여준다.
-    //사용자가 BookDetailFragment에서 좋아요버튼을 클릭했을때 SearchBookFragment의 리사이클러뷰에서 적용을 시켜주기위해 selectDetailBookPosition을 저장한다.
+    //사용자가 책 검색 리스트에서 아이템을 클릭을 하면 BookDetailFragment로 이동을 한다.
+    //이때 BookDetailFragment는 detailBook이라는 값을 참조하여 책의 제목이나 콘텐츠 등을 사용자에게 보여준다.
+    //사용자가 BookDetailFragment에서 좋아요버튼을 클릭했을때 SearchBookFragment의 리사이클러뷰에서 즉시적용을 시켜주기위해 selectDetailBookPosition을 저장한다.
     fun updateDetailBook(position: Int) {
         detailBook = searchBookResponse?.documents?.get(position)
         selectDetailBookPosition = position

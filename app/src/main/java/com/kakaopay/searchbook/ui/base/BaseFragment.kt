@@ -24,7 +24,7 @@ abstract class BaseFragment : Fragment() {
         setOnClickListener(OnThrottleClickListener(listener))
     }
 
-    //현재 모바일네트워크연결 체크함수
+    //사용자 모바일네트워크 체크 함수
     fun getNetworkConnected(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
@@ -32,7 +32,7 @@ abstract class BaseFragment : Fragment() {
         return isConnected
     }
 
-    //edittext 딜레이 함수(사용자 입력으로부터)
+    //EditText 지연 함수
     fun EditText.afterTextChangedCustom(delay: Long, search: (String) -> Unit) {
         var job: Job? = null
         this.addTextChangedListener {

@@ -116,11 +116,6 @@ class SearchBookFragment : BaseFragment() {
                     hideProgressBar()
                     response.message?.let { message ->
                         Log.d(TAG, "에러:: ${message}");
-                        Toast.makeText(
-                            activity,
-                            R.string.no_internet_connection,
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 }
 
