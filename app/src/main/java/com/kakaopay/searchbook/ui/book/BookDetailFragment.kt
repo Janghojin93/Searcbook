@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import com.kakaopay.searchbook.R
@@ -41,11 +42,7 @@ class BookDetailFragment : BaseFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            BookDetailFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        fun newInstance() = BookDetailFragment()
     }
 
 
@@ -56,17 +53,24 @@ class BookDetailFragment : BaseFragment() {
 
         binding.imagebuttonBookdetailLikebutton.onThrottleClick {
             Log.d(TAG, "좋아요 클릭")
-            changeLikeButton()
+            changeLikeState()
             bookViewModel.likeBook()
+        }
+
+
+        binding.imagebuttonBookdetailBackbutton.onThrottleClick {
+            (activity as BookActivity).onBackPressed()
         }
 
     }
 
-    private fun changeLikeButton() {
+    private fun changeLikeState() {
         if (bookViewModel.detailBook!!.islike) {
             binding.imagebuttonBookdetailLikebutton.setImageResource(R.drawable.ic_baseline_favorite_24_false)
+            Toast.makeText(activity, R.string.detailbook_like_false, Toast.LENGTH_SHORT).show()
         } else {
             binding.imagebuttonBookdetailLikebutton.setImageResource(R.drawable.ic_baseline_favorite_24_true)
+            Toast.makeText(activity, R.string.detailbook_like_true, Toast.LENGTH_SHORT).show()
         }
     }
 

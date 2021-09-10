@@ -68,31 +68,25 @@ class SearchBookFragment : BaseFragment() {
 
         setupRecyclerView()
         initObsever()
+        initUi()
 
         binding.edittextSearchbookSearchbar.apply {
             afterTextChangedCustom(SEARCH_BOOK_TIME_DELAY) {
                 if (getNetworkConnected(application)) {
-
-                    Log.d(TAG, "검색실행::" + it);
-
-                    bookViewModel.newSearchBook(it)
+                    if (it != "") {
+                        bookViewModel.newSearchBook(it)
+                    }
                 } else {
                     Toast.makeText(activity, R.string.no_internet_connection, Toast.LENGTH_SHORT)
-                        .show();
+                        .show()
                 }
             }
         }
-
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            SearchBookFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
+        fun newInstance() = SearchBookFragment()
     }
 
 
@@ -103,13 +97,13 @@ class SearchBookFragment : BaseFragment() {
                     var isList = true
                     hideProgressBar()
                     response.data?.let { bookResponse ->
-
                         Log.d(TAG, "성공:: ${bookResponse.meta.is_end}");
                         searchbookAdapter.submitList(bookResponse.documents.toList())
                         isLastPage = bookResponse.meta.is_end
                         isList = bookResponse.documents.toList().size != 0
                     }
 
+                    //서버로부터 불러온 책 리스트가 존재하지않을때 리사이클러뷰는 가려지고 EmptyView가 보여진다.
                     if (!isList) {
                         showEmptyView()
                     } else {
@@ -122,6 +116,11 @@ class SearchBookFragment : BaseFragment() {
                     hideProgressBar()
                     response.message?.let { message ->
                         Log.d(TAG, "에러:: ${message}");
+                        Toast.makeText(
+                            activity,
+                            R.string.no_internet_connection,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 
@@ -142,12 +141,21 @@ class SearchBookFragment : BaseFragment() {
             addOnScrollListener(this@SearchBookFragment.scrollListener)
         }
 
+
         searchbookAdapter.onBookClicked = { postion ->
             Log.d(TAG, "아이템클릭::${postion}");
             bookViewModel.updateDetailBook(postion)
             (activity as BookActivity).openBookDetailFragment()
         }
 
+
+    }
+
+    private fun initUi() {
+        binding.floatingbuttonSearchbookMoveTop.hide()
+        binding.floatingbuttonSearchbookMoveTop.onThrottleClick {
+            binding.recyclerviewSearchbookBooklist.smoothScrollToPosition(0)
+        }
     }
 
 
@@ -156,9 +164,29 @@ class SearchBookFragment : BaseFragment() {
             super.onScrolled(recyclerView, dx, dy)
 
             val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+
             val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+
+            Log.d(
+                TAG,
+                "[firstVisibleItemPosition::${firstVisibleItemPosition}] :: [lastVisibleItemPosition::${lastVisibleItemPosition}]"
+            )
+
+            //사용자가리사이클러뷰의 포지션을 20이상 스크롤했을때 플로팅버튼이 보여진다.
+            if (lastVisibleItemPosition > 20) {
+                showFloatingButton()
+            } else {
+                hideFloatingButton()
+            }
+
             val visibleItemCount = layoutManager.childCount
             val totalItemCount = layoutManager.itemCount
+
+            Log.d(
+                TAG,
+                "[visibleItemCount::${visibleItemCount}] :: [totalItemCount::${totalItemCount}]"
+            )
 
             val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
             val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
@@ -174,7 +202,7 @@ class SearchBookFragment : BaseFragment() {
                     Log.d(TAG, "scrollListener::");
                 } else {
                     Toast.makeText(activity, R.string.no_internet_connection, Toast.LENGTH_SHORT)
-                        .show();
+                        .show()
                 }
             } else {
                 binding.recyclerviewSearchbookBooklist.setPadding(0, 0, 0, 0)
@@ -214,7 +242,15 @@ class SearchBookFragment : BaseFragment() {
         binding.imageviewEmptyviewEmptyImage.visibility = View.VISIBLE
         binding.imageviewEmptyviewEmptyTextTop.visibility = View.VISIBLE
         binding.imageviewEmptyviewEmptyTextBottom.visibility = View.VISIBLE
+        hideFloatingButton()
     }
 
+    private fun showFloatingButton() {
+        binding.floatingbuttonSearchbookMoveTop.show()
+    }
+
+    private fun hideFloatingButton() {
+        binding.floatingbuttonSearchbookMoveTop.hide()
+    }
 
 }

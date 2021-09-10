@@ -37,8 +37,6 @@ class BookViewModel @Inject constructor(private val bookRepository: BookReposito
 
         //방금전에 같은쿼리와 같은 페이지번호로 요청을 했다면 실행되지않도록 한다.(중복방지)
         if (!oldSearchQuery.equals(searchQuery) || oldsearchBookPage + 1 != searchBookPage) {
-            Log.d("adsafasdasdf", "[newSearchBook:] ")
-
             searchBookPage = 1
             searchBookResponse = null
 

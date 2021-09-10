@@ -45,6 +45,25 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_searchbook_booklist"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            android:clipToPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/inputlayout_searchbook_searchbar_background"
+            tools:listitem="@layout/list_item_search_book"
+
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintlayout_searchbook_empty_view"
             android:layout_width="0dp"
@@ -62,7 +81,6 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/img_empty"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -88,34 +106,28 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="@string/searchbook_empty_text_bottom"
-                android:textColor="#b8b8b8"
+                android:textColor="#707070"
                 android:textSize="11dp"
-                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageview_emptyview_empty_text_top"
 
                 />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingbutton_searchbook_move_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
+                app:fabSize="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_searchbook_booklist"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@android:color/transparent"
-            android:clipToPadding="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputlayout_searchbook_searchbar_background"
-            tools:listitem="@layout/list_item_search_book"
-
-            >
-
-        </androidx.recyclerview.widget.RecyclerView>
 
 
         <ProgressBar
@@ -129,6 +141,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
+
 
 
     </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.kakaopay.searchbook.R
 import java.text.SimpleDateFormat
@@ -18,6 +19,7 @@ object ViewBinding {
     fun loadBookImage(view: ImageView, imageUrl: String) {
         Glide.with(view.context)
             .load(Uri.parse(imageUrl))
+            .transition(DrawableTransitionOptions.withCrossFade(250))
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.img_book_loading)
@@ -33,6 +35,7 @@ object ViewBinding {
     fun loadBookPrice(view: TextView, price: Int) {
         view.setText("${price}원")
     }
+
 
     @JvmStatic
     @BindingAdapter("bookcontents")
