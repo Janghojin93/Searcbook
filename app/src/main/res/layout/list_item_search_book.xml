@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="book_model"
             type="com.kakaopay.searchbook.data.model.book.Book" />
