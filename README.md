@@ -8,7 +8,7 @@
 
 #### MVVM
 ![alt text](https://blog.kakaocdn.net/dn/btAmVC/btq0UcTfvWA/k5S7WNmEuKS9yAiCNCUZ2K/img.png)
-<img src="https://blog.kakaocdn.net/dn/btAmVC/btq0UcTfvWA/k5S7WNmEuKS9yAiCNCUZ2K/img.png"  width="500">
+<img src="https://blog.kakaocdn.net/dn/btAmVC/btq0UcTfvWA/k5S7WNmEuKS9yAiCNCUZ2K/img.png"  width="700">
 
 ### APK 다운로드 주소 
 [SearchBook](https://drive.google.com/file/d/1iQWpoI_RXwC7LGEv69YXpq_vKkqdyiCb/view?usp=sharing)
