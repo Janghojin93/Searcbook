@@ -40,28 +40,12 @@ class SearchBookAdapter : ListAdapter<Book, RecyclerView.ViewHolder>(DiffCallbac
     inner class SearchBookViewHolder(val binding: ListItemSearchBookBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-
         init {
             binding.constraintlayoutBookParentView.setOnClickListener {
-                Log.d("dasfasdasd", "클릭됨");
                 onBookClicked!!.invoke(adapterPosition)
             }
         }
 
-        fun bind(data: Book) {
-            with(binding) {
-                textviewBookTitle.text = data.title
-                textviewBookSubject.text = data.contents
-                textviewBookPrice.text = "${data.price}"
-                textviewBookReleaseDate.text = "${data.datetime}"
-            }
-        }
-
-        fun setAlpha(alpha: Float) {
-            with(binding) {
-
-            }
-        }
     }
 
 }
