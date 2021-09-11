@@ -18,7 +18,7 @@
 ### 주요 라이브러리
 1. Coroutine
 2. Hilt
-3. Retrofit
+3. Retrofit2
 4. Databinding
 5. Room
 6. LiveData
