@@ -7,7 +7,7 @@
 ### 프로젝트패턴
 
 #### MVVM
-![alt text](https://blog.kakaocdn.net/dn/sBsoq/btq9jG7OqVt/oMIvBNJgpTQuLOkRQYb4F1/img.png)
+![alt text](https://blog.kakaocdn.net/dn/btAmVC/btq0UcTfvWA/k5S7WNmEuKS9yAiCNCUZ2K/img.png)
 
 
 ### APK 다운로드 주소 
