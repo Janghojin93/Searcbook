@@ -6,7 +6,7 @@ buildscript {
     ext.lifecycleVersion = "2.3.1"
 
     // Android SDK version
-    ext.androidMinSdkVersion = 21
+    ext.androidMinSdkVersion = 23
     ext.androidTargetSdkVersion = 30
     ext.androidCompileSdkVersion = 30
 
