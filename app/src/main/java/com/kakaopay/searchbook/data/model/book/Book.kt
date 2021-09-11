@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "book_table")
 data class Book(
+
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
 
     //도서 저자 리스트
