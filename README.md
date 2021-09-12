@@ -4,7 +4,7 @@
 <img src="https://kin-phinf.pstatic.net/20210911_159/16313547675841lFB2_PNG/Screenshot_1631354080.png?type=w750"  width="150">   <img src="https://kin-phinf.pstatic.net/20210911_272/1631354768004ykuke_PNG/Screenshot_1631354166.png?type=w750"  width="150">   <img src="https://kin-phinf.pstatic.net/20210911_231/1631354768447UNuLX_PNG/Screenshot_1631354172.png?type=w750"  width="150">
 
 
-### 프로젝트패턴
+### 디자인패턴
 
 #### MVVM
 <img src="https://blog.kakaocdn.net/dn/btAmVC/btq0UcTfvWA/k5S7WNmEuKS9yAiCNCUZ2K/img.png"  width="700">
