@@ -1,5 +1,5 @@
-# Kakao Pay Book Search - 장호진
-과제명: 카카오 책 API를 이용해서 책 검색 앱 만들기
+# 연습용 프로젝트 - 장호진
+프로젝트명: 카카오 책 API를 이용한 책검색앱
 
 <img src="https://kin-phinf.pstatic.net/20210911_159/16313547675841lFB2_PNG/Screenshot_1631354080.png?type=w750"  width="150">   <img src="https://kin-phinf.pstatic.net/20210911_272/1631354768004ykuke_PNG/Screenshot_1631354166.png?type=w750"  width="150">   <img src="https://kin-phinf.pstatic.net/20210911_231/1631354768447UNuLX_PNG/Screenshot_1631354172.png?type=w750"  width="150">
 
