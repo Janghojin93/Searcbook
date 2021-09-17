@@ -9,6 +9,9 @@
 #### MVVM
 <img src="https://blog.kakaocdn.net/dn/btAmVC/btq0UcTfvWA/k5S7WNmEuKS9yAiCNCUZ2K/img.png"  width="700">
 
+### 개발기간
+4일
+
 ### 사용언어
 1. Kotlin
 
