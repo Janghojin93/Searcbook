@@ -9,9 +9,6 @@
 #### MVVM
 <img src="https://blog.kakaocdn.net/dn/btAmVC/btq0UcTfvWA/k5S7WNmEuKS9yAiCNCUZ2K/img.png"  width="700">
 
-### APK 다운로드 주소 
-[SearchBook](https://drive.google.com/file/d/1iQWpoI_RXwC7LGEv69YXpq_vKkqdyiCb/view?usp=sharing)
-
 ### 사용언어
 1. Kotlin
 
@@ -22,3 +19,6 @@
 4. Databinding
 5. Room
 6. LiveData
+
+### APK 다운로드 주소 
+[SearchBook](https://drive.google.com/file/d/1iQWpoI_RXwC7LGEv69YXpq_vKkqdyiCb/view?usp=sharing)
